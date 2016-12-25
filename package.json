@@ -1,0 +1,25 @@
+{
+  "name": "sensus-consumer",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/user01/sensus-consumer.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/user01/sensus-consumer/issues"
+  },
+  "homepage": "https://github.com/user01/sensus-consumer#readme",
+  "dependencies": {
+    "bluebird": "^3.4.7",
+    "glob": "^7.1.1",
+    "ramda": "^0.22.1",
+    "yargs": "^6.5.0"
+  }
+}
