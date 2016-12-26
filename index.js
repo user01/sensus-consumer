@@ -17,7 +17,7 @@ const pool = new Pool({
   user: env.db_user,
   password: env.db_password,
   database: env.db_database,
-  port: 5432, //env var: PGPORT
+  port: 5432,
   max: 10, // max number of clients in the pool
   idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
 });
@@ -47,7 +47,6 @@ const get_type = R.pipe(
 // Generate the chain of value sets
 const values_chain = R.pipe(
   R.length,
-  // R.add(-1),
   R.range(0),
   R.map(i => `($${i+1})`),
   R.join(', ')
@@ -60,10 +59,7 @@ const handle_json = (full_json) => {
   const type = {
     '$type': get_type(full_json)
   };
-  return R.pipe(
-    R.map(R.merge(R.__, type)),
-    R.slice(0, 3)
-  )(full_json);
+  return R.map(R.merge(R.__, type))(full_json);
 };
 
 const write_json = (updated_json) => {
@@ -99,19 +95,12 @@ pool
           CREATE INDEX ON sensus((datum->>'DeviceId'));`)
   .then(() => {
     return get_json_paths(cwd)
-      .then((res) => {
-        return R.slice(0, 5, res); // TODO: Remove DEBUG limiter
-      })
       .then((fullpaths) => {
         return Promise.map(fullpaths, handle_json_path, {
           concurrency: 2
         });
       })
-      .then((res) => {
-        console.log('Final result');
-        console.log(R.sum(res));
-        return R.sum(res);
-      });
+      .then(R.sum);
   })
   .then((final_count) => {
     console.log(`Written ${final_count} records.`);
