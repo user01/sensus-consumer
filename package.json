@@ -18,7 +18,9 @@
   "homepage": "https://github.com/user01/sensus-consumer#readme",
   "dependencies": {
     "bluebird": "^3.4.7",
+    "dotenv": "^2.0.0",
     "glob": "^7.1.1",
+    "pg": "^6.1.2",
     "ramda": "^0.22.1",
     "yargs": "^6.5.0"
   }
